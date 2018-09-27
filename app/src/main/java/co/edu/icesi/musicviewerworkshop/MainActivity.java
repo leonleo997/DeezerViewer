@@ -1,11 +1,13 @@
 package co.edu.icesi.musicviewerworkshop;
 
+import android.content.Intent;
 import android.graphics.ImageDecoder;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -43,20 +45,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         deezerConnect = new DeezerConnect(this, APPLICATION_ID);
 
-        inicializarLista("Eminem");
+        inicializarLista("Salsa");
 
         playlistAdapter = new PlaylistAdapter(this);
         list_Playlist = findViewById(R.id.list_playlist);
         list_Playlist.setAdapter(playlistAdapter);
 
-        et_search=findViewById(R.id.et_searchBar);
+        list_Playlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Playlist playlist = (Playlist) playlistAdapter.getItem(position);
+
+                Intent intent = new Intent(MainActivity.this, PlaylistDetails.class);
+                intent.putExtra("idPlaylist",playlist.getId());
+
+                //finish();
+                startActivity(intent);
+            }
+        });
+
+        et_search = findViewById(R.id.et_searchBar);
 
 
-        img_search=findViewById(R.id.btn_search);
+        img_search = findViewById(R.id.btn_search);
         img_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre=et_search.getText().toString();
+                String nombre = et_search.getText().toString();
                 inicializarLista(nombre);
             }
         });

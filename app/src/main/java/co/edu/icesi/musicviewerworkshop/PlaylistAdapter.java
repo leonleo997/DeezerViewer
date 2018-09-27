@@ -61,9 +61,7 @@ public class PlaylistAdapter extends BaseAdapter {
         View view = inflater.inflate(R.layout.item, null, false);
 
         ImageView playlistImage = view.findViewById(R.id.img_playlist);
-        TextView playlistName = view.findViewById(R.id.tv_playlistName);
-        TextView ownerName = view.findViewById(R.id.tv_ownerName);
-        TextView songsNumber = view.findViewById(R.id.tv_songsNumber);
+
 
         Playlist playlist = playList.get(position);
 
@@ -77,6 +75,9 @@ public class PlaylistAdapter extends BaseAdapter {
             Log.e(this.getClass().toString(), "Error al abrir la conexión de la foto de la playlist");
         }
 
+        TextView playlistName = view.findViewById(R.id.tv_playlistName);
+        TextView ownerName = view.findViewById(R.id.tv_ownerName);
+        TextView songsNumber = view.findViewById(R.id.tv_songsNumber);
 
         playlistName.setText(playlist.getTitle());
         ownerName.setText(playlist.getCreator().getName());
