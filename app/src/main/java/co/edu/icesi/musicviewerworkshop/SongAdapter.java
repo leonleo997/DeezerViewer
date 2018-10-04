@@ -72,11 +72,8 @@ public class SongAdapter extends BaseAdapter {
         trackName.setText(track.getTitle());
         trackArtist.setText(track.getArtist().getName());
         //Log.e("adaptador song);
-        Date releaseDate = track.getReleaseDate();
-        if(releaseDate!=null)
-            trackRelease.setText(releaseDate.getDay()+"/"+releaseDate.getMonth()+"/"+releaseDate.getYear());
-        else
-            trackRelease.setText("No tiene año de release");
+        trackRelease.setText("Song Rank: "+track.getRank());
+
         return view;
     }
 

@@ -81,8 +81,8 @@ public class PlaylistAdapter extends BaseAdapter {
 
         playlistName.setText(playlist.getTitle());
         ownerName.setText(playlist.getCreator().getName());
-        songsNumber.setText(playlist.getTracks().size() + " Number of songs");
-        //buscarLista(playlist.getId());
+        songsNumber.setText("Link: "+playlist.getLink());
+        buscarLista(playlist.getId());
 
         return view;
     }
@@ -92,33 +92,33 @@ public class PlaylistAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-//    public void buscarLista(long id) {
-//
-//        String APPLICATION_ID = "302064";
-//        DeezerConnect deezerConnect = new DeezerConnect(activity, APPLICATION_ID);
-//
-//
-//        DeezerRequest DR = DeezerRequestFactory.requestPlaylist(id);
-//
-//        RequestListener listener = new JsonRequestListener() {
-//
-//            public void onResult(Object result, Object requestId) {
-//                Playlist playlist = (Playlist) result;
-//
-//                Log.e("TEST", "Tamanio " + playlist.getTracks().size());
-//                // do something with the albums
-//            }
-//
-//            public void onUnparsedResult(String requestResponse, Object requestId) {
-//            }
-//
-//            public void onException(Exception e, Object requestId) {
-//            }
-//        };
-//
-//        deezerConnect.requestAsync(DR, listener);
-//
-//
-//    }
+    public void buscarLista(long id) {
+
+        String APPLICATION_ID = "302064";
+        DeezerConnect deezerConnect = new DeezerConnect(activity, APPLICATION_ID);
+
+
+        DeezerRequest DR = DeezerRequestFactory.requestPlaylist(id);
+
+        RequestListener listener = new JsonRequestListener() {
+
+            public void onResult(Object result, Object requestId) {
+                Playlist playlist = (Playlist) result;
+
+                Log.e("TEST", "Tamanio " + playlist.getTracks().size());
+                // do something with the albums
+            }
+
+            public void onUnparsedResult(String requestResponse, Object requestId) {
+            }
+
+            public void onException(Exception e, Object requestId) {
+            }
+        };
+
+        deezerConnect.requestAsync(DR, listener);
+
+
+    }
 
 }

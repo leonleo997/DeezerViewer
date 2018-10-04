@@ -74,24 +74,50 @@ public class SongDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("BUTTON", "onClick: " + track.getLink());
-                try {
-                    TrackPlayer trackPlayer = new TrackPlayer(getApplication(), deezerConnect, new WifiAndMobileNetworkStateChecker());
-                    if (!parar[0]) {
+
+                //play.setEnabled(false);
+                ThreadGroup tg = new ThreadGroup("hilos");
+
+                Thread hilo = new Thread(tg,"One") {
+                    @Override
+                    public void run() {
+                        super.run();
+                        TrackPlayer trackPlayer = null;
+                        try {
+                            trackPlayer = new TrackPlayer(getApplication(), deezerConnect, new WifiAndMobileNetworkStateChecker());
+
+                        } catch (TooManyPlayersExceptions tooManyPlayersExceptions) {
+                            tooManyPlayersExceptions.printStackTrace();
+                        } catch (DeezerError deezerError) {
+                            deezerError.printStackTrace();
+                        }
                         trackPlayer.playTrack(track.getId());
-                        parar[0] = true;
-                        play.setText("Stop");
-                    } else {
-                        trackPlayer.stop();
-                        trackPlayer.release();
-                        parar[0] = false;
+                    }
+                };
+                hilo.start();
+
+                Thread hilo2 = new Thread(tg,"two") {
+                    @Override
+                    public void run() {
+                        super.run();
+                        play.setText("Wait");
+                        try {
+                            sleep(32000l);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        //play.setEnabled(true);
                         play.setText("Play");
                     }
+                };
+                hilo2.start();
 
-                } catch (TooManyPlayersExceptions tooManyPlayersExceptions) {
-                    tooManyPlayersExceptions.printStackTrace();
-                } catch (DeezerError deezerError) {
-                    deezerError.printStackTrace();
-                }
+
+
+//                    Thread.sleep(150000l);
+//                    trackPlayer.stop();
+//                    trackPlayer.release();
+
             }
         });
 

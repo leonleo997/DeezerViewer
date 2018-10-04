@@ -14,10 +14,7 @@ import android.widget.ListView;
 
 import com.deezer.sdk.model.Album;
 import com.deezer.sdk.model.Playlist;
-import com.deezer.sdk.model.Permissions;
 import com.deezer.sdk.network.connect.DeezerConnect;
-import com.deezer.sdk.network.connect.SessionStore;
-import com.deezer.sdk.network.connect.event.DialogListener;
 import com.deezer.sdk.network.request.DeezerRequest;
 import com.deezer.sdk.network.request.DeezerRequestFactory;
 import com.deezer.sdk.network.request.event.JsonRequestListener;
@@ -59,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, PlaylistDetails.class);
                 intent.putExtra("idPlaylist",playlist.getId());
 
-                //finish();
                 startActivity(intent);
             }
         });
@@ -99,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        Log.i("Info", "inicializarLista: "+deezerConnect.isSessionValid() );
         deezerConnect.requestAsync(DR, listener);
 
 
